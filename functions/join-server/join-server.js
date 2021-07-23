@@ -41,7 +41,7 @@ const handler = async (event) => {
     const parsedProfile = JSON.parse(profile);
 
     await axios({
-      url: `https://discord.com/api/guilds/${866381528463835176}/members/${parsedProfile.id}`,
+      url: `https://discord.com/api/guilds/${process.env.GUILDID}/members/${parsedProfile.id}`,
       data: { access_token: parsedProfile.accessToken },
       method: "PUT",
       headers: { Authorization: `Bot ${process.env.BOTTOKEN}` },
