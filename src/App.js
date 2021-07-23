@@ -3,7 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Home from "./components/Home";
 import Switcher from "./components/Switcher";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/About";
 import Error from "./components/Error";
 
