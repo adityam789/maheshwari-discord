@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+// 1. import `ChakraProvider` component
+import { ChakraProvider } from "@chakra-ui/react";
+import Home from "./components/Home";
+import Switcher from "./components/Switcher";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import About from "./components/About";
+import Error from "./components/Error";
 
 function App() {
+  const a = "Aye oh mate";
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Switcher />
+      <Router>
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/" exact>
+            <Home a={a} />
+          </Route>
+          <Route path="*">
+            <Error error={{ code: 404, message: "Page not found" }} />
+          </Route>
+        </Switch>
+      </Router>
+    </ChakraProvider>
   );
 }
 
