@@ -36,19 +36,12 @@ export default function Home() {
           >
             The Real Advisors
           </Text>
-          <Link
-            textDecoration={"none"}
-            href={
-              process.env.NODE_ENV === "development"
-                ? ".netlify/functions/auth/discord"
-                : "/api/auth/discord"
-            }
-          >
+          <Link textDecoration={"none"} href={"/api/oauth-passport/discord"}>
             <Button textDecoration={"none"}>
               Login with
               <Image
                 h={"100%"}
-								mx={"3"}
+                mx={"3"}
                 src={useColorModeValue(
                   "https://discord.com/assets/92ad040ed5143bfb541ea61f5c3bb18f.svg",
                   "https://discord.com/assets/364fc8a0ee7fcebf47ca6ebd16ec12f1.svg"
