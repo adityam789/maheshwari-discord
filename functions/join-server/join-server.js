@@ -43,14 +43,14 @@ const handler = async (event) => {
     );
     const parsedProfile = JSON.parse(profile);
 
-    client.end();
+    client.quit()
 
     await axios({
       url: `https://discord.com/api/guilds/${process.env.GUILDID}/members/${parsedProfile.id}`,
       data: { access_token: parsedProfile.accessToken },
       method: "PUT",
       headers: { Authorization: `Bot ${process.env.BOTTOKEN}` },
-    }).then(console.log);
+    })
 
     return {
       statusCode: 200,
@@ -60,7 +60,7 @@ const handler = async (event) => {
       // isBase64Encoded: true,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { statusCode: 500, body: error.toString() };
   }
 };

@@ -5,7 +5,7 @@ const passportJwt = require("passport-jwt");
 const redis = require("redis");
 
 const {
-  BASE_URL,
+  // BASE_URL,
   ENDPOINT,
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,
@@ -32,7 +32,7 @@ const getDiscordStrategy = function () {
     async (accessToken, refreshToken, profile, done) => {
       try {
         const isInServer = profile.guilds.some(
-          (guild) => guild.id == process.env.GUILDID
+          (guild) => guild.id === process.env.GUILDID
         );
         const client = redis.createClient({
           host: process.env.REDISHOST,
@@ -40,7 +40,7 @@ const getDiscordStrategy = function () {
           password: process.env.REDISPASSWORD
         });
         client.setex(`user.${profile.username}#${profile.discriminator}`, 3600, JSON.stringify(profile))
-        client.end()
+        client.quit()
         const user = {
           email: profile.email,
           username: profile.username,

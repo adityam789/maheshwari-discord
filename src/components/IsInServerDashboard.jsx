@@ -78,7 +78,7 @@ export default function IsInServerDashboard({ user }) {
           duration: 4000,
           isClosable: true,
         });
-        console.log(err);
+        console.error(err);
         setButtonColor("red");
       })
       .finally(() => {

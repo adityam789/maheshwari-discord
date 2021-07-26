@@ -18,7 +18,7 @@ export default function Dashboard() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         setData({
           error: { code: 401, message: "Token has expired, Login again." },
         });

@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const handler = async (event) => {
 
-  console.log(event.body)
-
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -28,7 +26,6 @@ const handler = async (event) => {
   }
 
   let randomInviteCode = nanoid(8);
-  console.log(randomInviteCode);
   const client = redis.createClient({
     host: process.env.REDISHOST,
     port: process.env.REDISPORT,
@@ -36,7 +33,7 @@ const handler = async (event) => {
   });
 
   client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
-  client.end()
+  client.quit()
 
   try {
     jwt.verify(token, process.env.SECRET || "SUPERSECRET");
@@ -48,7 +45,7 @@ const handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.log(error);
+    console.error(error)
     return { statusCode: 500, body: error.toString() };
   }
 };
