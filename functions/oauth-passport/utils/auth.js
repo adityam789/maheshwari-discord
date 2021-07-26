@@ -3,11 +3,6 @@ const passport = require("passport");
 const { Strategy: DiscordStrategy } = require("passport-discord");
 const passportJwt = require("passport-jwt");
 const redis = require("redis");
-const client = redis.createClient({
-  host: process.env.REDISHOST,
-  port: process.env.REDISPORT,
-  password: process.env.REDISPASSWORD
-});
 
 const {
   BASE_URL,
@@ -18,7 +13,7 @@ const {
 } = require("./config");
 
 const authJwt = function (user) {
-  return sign({ user: user }, SECRET, { expiresIn: "24h" });
+  return sign({ user: user }, SECRET, { expiresIn: "1h" });
 };
 
 const applyPassportStrategies = function () {
@@ -32,18 +27,26 @@ const getDiscordStrategy = function () {
       clientID: DISCORD_CLIENT_ID,
       clientSecret: DISCORD_CLIENT_SECRET,
       callbackURL: `${ENDPOINT}/oauth-passport/discord/callback`,
-      scope: ["identify", "email", "guilds.join"],
+      scope: ["identify", "email", "guilds.join", "guilds"],
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        client.setex(profile.id, 3600, JSON.stringify(profile))
+        const isInServer = profile.guilds.some(
+          (guild) => guild.id == process.env.GUILDID
+        );
+        const client = redis.createClient({
+          host: process.env.REDISHOST,
+          port: process.env.REDISPORT,
+          password: process.env.REDISPASSWORD
+        });
+        client.setex(`user.${profile.username}#${profile.discriminator}`, 3600, JSON.stringify(profile))
         client.end()
         const user = {
           email: profile.email,
           username: profile.username,
           discriminator: profile.discriminator,
           id: profile.id,
-          // isInServer: isInServer,
+          isInServer: isInServer,
           avatar: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}`,
         };
         const jwt = authJwt(user);

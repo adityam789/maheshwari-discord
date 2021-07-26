@@ -6,6 +6,7 @@ import Switcher from "./components/Switcher";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/About";
 import Error from "./components/Error";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const a = "Aye oh mate";
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/" exact>
             <Home a={a} />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
           </Route>
           <Route path="*">
             <Error error={{ code: 404, message: "Page not found" }} />

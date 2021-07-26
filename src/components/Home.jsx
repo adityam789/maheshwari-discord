@@ -34,7 +34,7 @@ export default function Home() {
             bgGradient="linear(to-l, #347eeb,#cf2d08)"
             bgClip="text"
           >
-            The Real Advisors
+            The Maheshwari Clan
           </Text>
           <Link textDecoration={"none"} href={"/api/oauth-passport/discord"}>
             <Button textDecoration={"none"}>

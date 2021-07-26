@@ -2,13 +2,7 @@
 const { default: axios } = require("axios");
 const jwt = require("jsonwebtoken");
 const redis = require("redis");
-const client = redis.createClient({
-  host: process.env.REDISHOST,
-  port: process.env.REDISPORT,
-  password: process.env.REDISPASSWORD,
-});
 const { promisify } = require("util");
-const getAsync = promisify(client.get).bind(client);
 
 function extractCookies(cookieStr) {
   return cookieStr
@@ -36,9 +30,20 @@ const handler = async (event) => {
     };
   }
   try {
+    const client = redis.createClient({
+      host: process.env.REDISHOST,
+      port: process.env.REDISPORT,
+      password: process.env.REDISPASSWORD,
+    });
+
+    const getAsync = promisify(client.get).bind(client);
     const payload = jwt.verify(token, process.env.SECRET || "SUPERSECRET");
-    const profile = await getAsync(payload.user.id);
+    const profile = await getAsync(
+      `user.${payload.user.username}#${payload.user.discriminator}`
+    );
     const parsedProfile = JSON.parse(profile);
+
+    client.end();
 
     await axios({
       url: `https://discord.com/api/guilds/${process.env.GUILDID}/members/${parsedProfile.id}`,
@@ -49,7 +54,7 @@ const handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: `Hello Penis` }),
+      body: JSON.stringify({ message: `Hello World` }),
       // // more keys you can return:
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,
