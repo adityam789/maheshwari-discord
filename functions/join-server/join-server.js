@@ -55,8 +55,11 @@ const handler = async (event) => {
 
     client.quit()
 
+    console.log(OTP)
+    console.log(JSON.parse(event.body).OTP)
+
     if(OTP !== JSON.parse(event.body).OTP){
-      return { statusCode: 403, body: "The invite code invalid" };
+      return { statusCode: 403, body: "The OTP invalid" };
     }
 
     const response = await axios({
