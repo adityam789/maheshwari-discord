@@ -18,7 +18,7 @@ app.use(cookieParser())
 app.use(passport.initialize())
 
 const handleCallback = (req, res) => {
-  res.cookie('jwt', req.user.jwt, { httpOnly: true, COOKIE_SECURE }).redirect('/')
+  res.cookie('jwt', req.user.jwt, { httpOnly: true, COOKIE_SECURE }).redirect('/dashboard')
 }
 
 app.get(`${ENDPOINT}/oauth-passport/discord`, passport.authenticate('discord', { session: false }))

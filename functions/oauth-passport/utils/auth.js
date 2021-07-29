@@ -12,6 +12,10 @@ const {
   SECRET,
 } = require("./config");
 
+const final_url = `${ENDPOINT}/oauth-passport/discord/callback`
+
+const REDIRECT_URL = process.env.NODE_ENV === "developement" ? `http://localhost:8888/${final_url}` : final_url
+
 const authJwt = function (user) {
   return sign({ user: user }, SECRET, { expiresIn: "1h" });
 };
@@ -26,7 +30,7 @@ const getDiscordStrategy = function () {
     {
       clientID: DISCORD_CLIENT_ID,
       clientSecret: DISCORD_CLIENT_SECRET,
-      callbackURL: `${ENDPOINT}/oauth-passport/discord/callback`,
+      callbackURL: REDIRECT_URL,
       scope: ["identify", "email", "guilds.join", "guilds"],
     },
     async (accessToken, refreshToken, profile, done) => {

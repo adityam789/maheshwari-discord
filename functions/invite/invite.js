@@ -40,7 +40,7 @@ const handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        link: `${event.headers.host}/?code=${randomInviteCode}`,
+        link: `${event.headers.host}/?invitecode=${randomInviteCode}`,
         username: JSON.parse(event.body).username,
       }),
     };

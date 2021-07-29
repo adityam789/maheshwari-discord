@@ -44,6 +44,24 @@ export default function IsInServerDashboard({ user }) {
   }
   async function handleForm(e) {
     e.preventDefault();
+    if (isSubmitted === username) {
+      return toast({
+        title: "Invite link has been already generated",
+        description: "Invite link has been already generated",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+    if (invite.length >= 5){
+      return toast({
+        title: "Reached Maximum number of invites",
+        description: "You can generate only 5 links at once",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
     if (!isDiscord) {
       return toast({
         title: "Username is invalid",
@@ -116,7 +134,8 @@ export default function IsInServerDashboard({ user }) {
                 type={"submit"}
                 colorScheme={buttonColor}
                 isDisabled={
-                  (isSubmitted === username ? true : false) || invite.length >= 5
+                  (isSubmitted === username ? true : false) ||
+                  invite.length >= 5
                 }
               >
                 <ArrowRightIcon />
@@ -129,7 +148,7 @@ export default function IsInServerDashboard({ user }) {
           </FormControl>
         </form>
         <Button onClick={onOpen}>View all invite links</Button>
-        <InviteModal onClose={onClose} isOpen={isOpen} invite={invite}/>
+        <InviteModal onClose={onClose} isOpen={isOpen} invite={invite} />
       </Stack>
     </Box>
   );

@@ -9,9 +9,19 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 export default function Home() {
+
+  let query = new URLSearchParams(useLocation().search);
+  const inviteCode = query.get("invitecode")
+
+  if(inviteCode){
+    window.localStorage.setItem("inviteCode", inviteCode)
+  }
+
   const MotionFlex = motion(Flex);
+
   return (
     <MotionFlex
       align={"center"}
