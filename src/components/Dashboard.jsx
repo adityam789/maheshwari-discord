@@ -33,7 +33,7 @@ export default function Dashboard() {
     return <Error error={data.error} />;
   }
 
-  if (!data.user.isInServer) {
+  if (data.user.isInServer) {
     return (
       <Flex h={"100vh"} w={"full"} align={"center"} justify={"center"}>
         <Stack direction={{ md: "row", base: "column" }}>

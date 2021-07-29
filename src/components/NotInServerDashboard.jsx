@@ -1,7 +1,3 @@
-// import { ArrowRightIcon, EmailIcon } from "@chakra-ui/icons";
-// import { Button, Input, InputGroup, Stack, Text, useToast } from "@chakra-ui/react";
-// import axios from "axios";
-// import { useState } from "react";
 import * as swot from "swot-node";
 
 import { ArrowRightIcon } from "@chakra-ui/icons";
@@ -18,7 +14,6 @@ import {
   FormControl,
   FormLabel,
   FormHelperText,
-  useColorModeValue,
   Spinner,
 } from "@chakra-ui/react";
 
@@ -28,8 +23,6 @@ import { Redirect } from "react-router-dom";
 
 export default function NotInServerDashboard(user) {
   // const [isEmail, setIsEmail] = useState("")
-
-  const [loadingPage, setLoadingPage] = useState(true);
 
   const [isInvited, setIsInvited] = useState(false);
 
