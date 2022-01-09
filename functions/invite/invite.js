@@ -32,7 +32,7 @@ const handler = async (event) => {
     password: process.env.REDISPASSWORD,
   });
 
-  await client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
+  client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
   client.quit()
 
   try {
