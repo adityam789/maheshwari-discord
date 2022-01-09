@@ -33,7 +33,7 @@ const handler = async (event) => {
   });
 
   client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
-  client.quit()
+  await client.quit()
 
   try {
     jwt.verify(token, process.env.SECRET || "SUPERSECRET");
