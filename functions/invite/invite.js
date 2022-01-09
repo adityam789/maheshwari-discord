@@ -32,8 +32,8 @@ const handler = async (event) => {
     password: process.env.REDISPASSWORD,
   });
 
-  client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
-  await client.quit()
+  await client.setex(`invite.${JSON.parse(event.body).username}`, 3600, randomInviteCode);
+  client.quit()
 
   try {
     jwt.verify(token, process.env.SECRET || "SUPERSECRET");
